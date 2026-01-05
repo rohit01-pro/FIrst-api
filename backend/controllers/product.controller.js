@@ -13,6 +13,7 @@ export const getProducts =  async (req, res) => {
 };
 
 export const createProduct =  async(req, res) => {
+    console.log("Request Body: " + req.body);
     const product = req.body;
 
     if (!product.name || !product.price || !product.image) {

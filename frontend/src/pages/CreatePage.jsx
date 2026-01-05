@@ -19,7 +19,7 @@ const CreatePage = () => {
                 description: message,
                 status: "error",
                 duration: 3000,
-                inClosable: true
+                isClosable: true
             })
         } else {
             toast({
@@ -27,7 +27,7 @@ const CreatePage = () => {
                 description: message,
                 status: "success",
                 duration: 3000,
-                inClosable: true
+                isClosable: true
             })
             setNewProduct({
                 name: "",

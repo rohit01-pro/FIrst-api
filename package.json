@@ -6,19 +6,21 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon backend/web.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "NODE_ENV=production node backend/web.js"
+    "start": "NODE_ENV=production node backend/web.js",
+    "seed": "node backend/scripts/seedProducts.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "dotenv": "^16.4.7"
-  },
-  "devDependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongodb-memory-server": "^10.3.0",
     "mongoose": "^8.9.5",
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.3.0"
   }
 }

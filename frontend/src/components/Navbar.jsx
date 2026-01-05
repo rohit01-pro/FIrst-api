@@ -1,10 +1,12 @@
-import { Button, Container, Flex, HStack, Text, useColorMode,  } from "@chakra-ui/react"
+import { Button, Container, Flex, HStack, Text, useColorMode, Badge, Box } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 
 
 import { PlusSquareIcon } from "@chakra-ui/icons";
 import { IoMoon } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
+import { FiShoppingCart } from "react-icons/fi";
+import { useProductStore } from "../store/product";
 
 
 
@@ -14,7 +16,9 @@ import { LuSun } from "react-icons/lu";
 
 const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
+    const { cart } = useProductStore()
     
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return  <Container maxW={"1140px"} px={4} >
     <Flex
@@ -48,12 +52,30 @@ const Navbar = () => {
                 <PlusSquareIcon fontSize={20} />
             </Button>
             </Link>
+            
+            <Button position="relative">
+                <FiShoppingCart size={20} />
+                {cartCount > 0 && (
+                    <Badge
+                        position="absolute"
+                        top="-2"
+                        right="-2"
+                        colorScheme="red"
+                        borderRadius="full"
+                        fontSize="xs"
+                        px={2}
+                    >
+                        {cartCount}
+                    </Badge>
+                )}
+            </Button>
+            
             <Button onClick={toggleColorMode}>
                 {colorMode === "light"? <IoMoon /> : <LuSun size="20" />}
 
             </Button>
-            {/* <Link to={"/product/:id"}>Product Details</Link> */}
-            {/* <Link to={"/edit/:id"}>Edit Product</Link> */}
+            {/* <Link to={'/product/:id'}>Product Details</Link> */}
+            {/* <Link to={'/edit/:id'}>Edit Product</Link> */}
 
         </HStack>
 

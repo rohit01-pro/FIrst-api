@@ -2,7 +2,62 @@ import {create} from 'zustand'
 
 export const useProductStore = create((set) => ({
     products: [],
+    cart: [],
     setProducts: (products) => set({products}),
+    
+    // Cart Functions
+    addToCart: (product) => {
+        set((state) => {
+            const existingItem = state.cart.find(item => item._id === product._id);
+            if (existingItem) {
+                return {
+                    cart: state.cart.map(item => 
+                        item._id === product._id 
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    )
+                };
+            }
+            return {
+                cart: [...state.cart, { ...product, quantity: 1 }]
+            };
+        });
+        return { success: true, message: "Added to cart" };
+    },
+    
+    removeFromCart: (productId) => {
+        set((state) => ({
+            cart: state.cart.filter(item => item._id !== productId)
+        }));
+        return { success: true, message: "Removed from cart" };
+    },
+    
+    updateCartQuantity: (productId, quantity) => {
+        set((state) => ({
+            cart: state.cart.map(item => 
+                item._id === productId 
+                    ? { ...item, quantity: Math.max(1, quantity) }
+                    : item
+            )
+        }));
+    },
+    
+    clearCart: () => {
+        set({ cart: [] });
+        return { success: true, message: "Cart cleared" };
+    },
+    
+    getCartTotal: () => {
+        const state = useProductStore.getState();
+        return state.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    },
+    
+    getCartCount: () => {
+        const state = useProductStore.getState();
+        return state.cart.reduce((count, item) => count + item.quantity, 0);
+    },
+    
+    // Product CRUD Functions
     createProduct: async (newProduct) => {
         if(!newProduct.name || !newProduct.image || !newProduct.price) {
             return {success:false, message:"Please fill in all fields."}
