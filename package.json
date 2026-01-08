@@ -7,7 +7,8 @@
     "dev": "NODE_ENV=development nodemon backend/web.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
     "start": "NODE_ENV=production node backend/web.js",
-    "seed": "node backend/scripts/seedProducts.js"
+    "seed": "node backend/scripts/seedProducts.js",
+    "vercel-build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "nodemon": "^3.1.9"
   },
   "devDependencies": {
+    "@vercel/node": "^5.5.16",
     "mongodb-memory-server": "^10.3.0"
   }
 }

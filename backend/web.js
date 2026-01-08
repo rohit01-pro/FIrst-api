@@ -7,12 +7,17 @@ import productRoutes from "./routes/product.route.js";
 
 const app = express();
 
-app.use(cors());
+// Enable CORS for all routes
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? [process.env.PRODUCTION_URL || 'https://your-vercel-domain.vercel.app']
+    : ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true
+}));
 
 const PORT = process.env.PORT || 5002;
 
 const __dirname = path.resolve()
-
 
 app.use(express.json());
 
@@ -25,7 +30,6 @@ if(process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
     });
 }
-
 
 app.listen(PORT, () => {
     connectDB();
